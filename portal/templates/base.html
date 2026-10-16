@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% endblock %} · Club Portal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav>
+  <strong>Club Portal</strong>
+  {% if g.user %}
+    <a href="{{ url_for('events.list_events') }}">Events</a>
+    <a href="{{ url_for('members.profile') }}">My profile</a>
+    {% if g.user['role'] == 'admin' %}<a href="{{ url_for('admin.dashboard') }}">Admin</a>{% endif %}
+    <span class="spacer"></span>
+    <span>{{ g.user['username'] }} ({{ g.user['role'] }})</span>
+    <form method="post" action="{{ url_for('auth.logout') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit">Log out</button>
+    </form>
+  {% else %}
+    <span class="spacer"></span>
+    <a href="{{ url_for('auth.login') }}">Log in</a>
+    <a href="{{ url_for('auth.register') }}">Register</a>
+  {% endif %}
+</nav>
+{% for message in get_flashed_messages() %}<div class="flash">{{ message }}</div>{% endfor %}
+{% block content %}{% endblock %}
+</body>
+</html>

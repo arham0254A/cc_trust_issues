@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Attendees{% endblock %}
+{% block content %}
+<h1>Attendees: {{ event['title'] }}</h1>
+<table>
+  <tr><th>Username</th><th>Name</th><th>Email</th><th>Registered</th></tr>
+  {% for p in people %}
+  <tr><td>{{ p['username'] }}</td><td>{{ p['full_name'] }}</td><td>{{ p['email'] }}</td><td>{{ p['created_at'] }}</td></tr>
+  {% else %}<tr><td colspan="4">Nobody yet.</td></tr>{% endfor %}
+</table>
+{% endblock %}

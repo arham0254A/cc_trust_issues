@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}New event{% endblock %}
+{% block content %}
+<h1>New event</h1>
+<form method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>Title <input name="title" required maxlength="120"></label>
+  <label>Description <textarea name="description" rows="4" maxlength="2000"></textarea></label>
+  <label>Starts at <input type="datetime-local" name="starts_at" required></label>
+  <label>Capacity <input type="number" name="capacity" min="1" max="10000" required></label>
+  <button type="submit">Create</button>
+</form>
+{% endblock %}
