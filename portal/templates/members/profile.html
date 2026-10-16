@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}My profile{% endblock %}
+{% block content %}
+<h1>{{ user['username'] }} <small>({{ user['role'] }})</small></h1>
+<form method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>Full name <input name="full_name" maxlength="100" value="{{ user['full_name'] }}"></label>
+  <label>Email <input type="email" name="email" maxlength="254" value="{{ user['email'] }}"></label>
+  <label>Bio <textarea name="bio" rows="4" maxlength="1000">{{ user['bio'] }}</textarea></label>
+  <button type="submit">Save</button>
+</form>
+<h2>My registrations</h2>
+<ul>
+  {% for e in my_events %}
+    <li><a href="{{ url_for('events.detail', event_id=e['id']) }}">{{ e['title'] }}</a> — {{ e['starts_at'] }}</li>
+  {% else %}<li>None yet.</li>{% endfor %}
+</ul>
+{% endblock %}

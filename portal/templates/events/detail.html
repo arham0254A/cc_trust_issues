@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}{{ event['title'] }}{% endblock %}
+{% block content %}
+<h1>{{ event['title'] }}</h1>
+<p>Starts {{ event['starts_at'] }} · {{ event['taken'] }} / {{ event['capacity'] }} seats taken</p>
+{# VULN #5 #}
+<p class="bio">{{ event['description'] | safe }}</p>
+<form method="post" action="{{ url_for('events.unregister' if mine else 'events.register', event_id=event['id']) }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <button type="submit">{{ 'Cancel my registration' if mine else 'Register' }}</button>
+</form>
+{% endblock %}

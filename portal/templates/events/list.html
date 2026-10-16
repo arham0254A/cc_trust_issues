@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Events{% endblock %}
+{% block content %}
+<h1>Events</h1>
+<table>
+  <tr><th>Event</th><th>Starts</th><th>Seats</th><th></th></tr>
+  {% for e in events %}
+  <tr>
+    <td><a href="{{ url_for('events.detail', event_id=e['id']) }}">{{ e['title'] }}</a></td>
+    <td>{{ e['starts_at'] }}</td>
+    <td>{{ e['taken'] }} / {{ e['capacity'] }}</td>
+    <td>{% if e['mine'] %}Registered{% endif %}</td>
+  </tr>
+  {% else %}<tr><td colspan="4">No events yet.</td></tr>{% endfor %}
+</table>
+{% endblock %}
